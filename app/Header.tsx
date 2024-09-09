@@ -19,11 +19,11 @@ export default function Header() {
                 <NavLink href='/connect'>Connect</NavLink>
                 <NavLink href='/multiplayer'>Multiplayer</NavLink>
                 <NavLink href='/about'>About</NavLink>
-                <li className='flex-1 justify-center flex md:hidden lg:flex items-stretch'>
+                <li className='flex-1 justify-end md:justify-center flex md:hidden lg:flex items-stretch'>
                     <CTA />
                 </li>
                 <li className='flex md:hidden w-12 justify-center items-stretch'>
-                    <Menu />
+                    <Menu cta={<CTA label='Your Profile' />} />
                 </li>
             </ul>
         </header>

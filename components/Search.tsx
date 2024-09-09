@@ -9,8 +9,8 @@ import { ChangeEvent, useEffect, useState } from 'react'
 
 import styles from '@/app/Search.module.css'
 
-export default function Search({ menuClose }: {
-    menuClose?: () => void,
+export default function Search({inMenu}: {
+    inMenu?: boolean,
 }) {
     const [users, setUsers] = useState<User[] | null>(null)
     const [query, setQuery] = useState('')
@@ -24,7 +24,6 @@ export default function Search({ menuClose }: {
     const handleSubmit = () => {
         router.push(`/connect?query=${query}`)
         setQuery('')
-        if (menuClose) menuClose()
     }
 
     useEffect(() => {
@@ -51,7 +50,7 @@ export default function Search({ menuClose }: {
                 <button onClick={handleSubmit} className='bg-neutral-600 p-2 text-white rounded-r'><Icon icon='search' /></button>
             </div>
             {users && (
-                <div className={`${styles.users} absolute top-full ${menuClose ? 'bg-white' : 'bg-white/95'} backdrop-blur left-0 right-0 flex flex-col rounded-b border border-neutral-200`}>
+                <div className={`${styles.users} absolute top-full ${inMenu ? 'bg-white' : 'bg-white/95'} backdrop-blur left-0 right-0 flex flex-col rounded-b border border-neutral-200`}>
                     {users.slice(0, 5).map((user, i) => (
                         <Link key={i} href={`/profile/${user.username}`} className='w-full p-2'>{user.username}</Link>
                     ))}
