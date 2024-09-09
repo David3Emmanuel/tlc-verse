@@ -3,8 +3,9 @@ import Profile from '@/app/profile/[username]/Profile'
 import { Suspense } from 'react'
 
 export async function generateStaticParams() {
-    const users = await getUsers()
-    return users.map(user => { username: user.username })
+    const { data: users, error } = await getUsers()
+    if (error) throw new Error(error)
+    return users!.map(user => { username: user.username })
 }
 
 export function generateMetadata({ params }: {

@@ -5,6 +5,7 @@ import Icon from '@/components/Icon'
 import { MouseEvent, useState } from 'react'
 import Link from 'next/link'
 import NavLink from '@/components/NavLink'
+import CTA from '@/components/CTA'
 
 import styles from '@/components/Menu.module.css'
 
@@ -30,7 +31,8 @@ export default function Menu() {
                     <NavLink href='/multiplayer'>Multiplayer</NavLink>
                     <NavLink href='/about'>About</NavLink>
                     <div className='flex md:hidden lg:flex items-stretch'>
-                        <NavLink href='/signup' cta>Get Started</NavLink>
+                        {/* <CTA /> */}
+                        <p>.</p>
                     </div>
                 </ul>
             </div>

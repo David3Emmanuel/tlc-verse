@@ -2,6 +2,7 @@ import Link from 'next/link'
 import NavLink from '@/components/NavLink'
 import Search from '@/components/Search'
 import Menu from '@/components/Menu'
+import CTA from '@/components/CTA'
 
 export default function Header() {
     return (
@@ -10,7 +11,7 @@ export default function Header() {
                 <Link href='/' className='text-xl font-medium p-2 flex items-center'>TLCverse</Link>
                 <div className='hidden md:flex flex-1 justify-center'><Search /></div>
                 <div className='hidden md:flex lg:hidden items-stretch'>
-                    <NavLink href='/signup' cta>Get Started</NavLink>
+                    <CTA />
                 </div>
             </div>
             <ul className='flex-1 flex justify-end items-stretch gap-1'>
@@ -18,9 +19,9 @@ export default function Header() {
                 <NavLink href='/connect'>Connect</NavLink>
                 <NavLink href='/multiplayer'>Multiplayer</NavLink>
                 <NavLink href='/about'>About</NavLink>
-                <div className='flex md:hidden lg:flex items-stretch'>
-                    <NavLink href='/signup' cta>Get Started</NavLink>
-                </div>
+                <li className='flex-1 justify-center flex md:hidden lg:flex items-stretch'>
+                    <CTA />
+                </li>
                 <div className='flex md:hidden w-12 justify-center items-stretch'>
                     <Menu />
                 </div>

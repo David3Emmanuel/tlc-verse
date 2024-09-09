@@ -5,9 +5,8 @@ import { usePathname, useSearchParams } from 'next/navigation'
 
 import menuStyles from '@/components/Menu.module.css'
 
-export default function NavLink({ href, cta, children }: {
+export default function NavLink({ href, children }: {
     href: string,
-    cta?: boolean,
     children: React.ReactNode,
 }) {
     const pathname = usePathname()
@@ -18,8 +17,8 @@ export default function NavLink({ href, cta, children }: {
         : pathname === href
 
     return (
-        <li className={`flex-1 ${cta ? 'block' : 'hidden md:block'}`}>
-            <Link href={href} className={`flex items-center p-2 w-full h-full justify-center font-medium rounded ${active || cta ? '' : 'hover:bg-neutral-100'} ${active && !cta ? 'bg-neutral-300 ' + menuStyles.active : ''} ${cta ? 'bg-[#ff0000] hover:bg-[#ee0000] text-white' : ''}`}>
+        <li className='flex-1 hidden md:block'>
+            <Link href={href} className={`flex items-center p-2 w-full h-full justify-center font-medium rounded ${active ? '' : 'hover:bg-neutral-100'} ${active ? 'bg-neutral-300 ' + menuStyles.active : ''}`}>
                 {children}
             </Link>
         </li>

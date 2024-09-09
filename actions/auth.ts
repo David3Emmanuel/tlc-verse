@@ -2,6 +2,7 @@
 
 import { LoginFormState, SignupFormState, LoginSchema, SignupSchema, UserRole } from '@/lib/definitions'
 import supabase from '@/actions/supabase'
+import { createSession } from '@/actions/session'
 
 
 export async function login(state: LoginFormState | undefined, formData: FormData): Promise<LoginFormState> {
@@ -22,6 +23,7 @@ export async function login(state: LoginFormState | undefined, formData: FormDat
         const { data, error } = await db.auth.signInWithPassword({ email, password })
         if (error) return { serverError: error.message }
 
+        createSession(data?.user.id)
         return { message: 'Success' }
     } catch {
         return { serverError: 'Something went wrong.' }
@@ -50,8 +52,9 @@ export async function signup(state: SignupFormState | undefined, formData: FormD
     const { email, password, username, first, last, roles } = validatedFields.data
     try {
         const db = await supabase()
-        const { error: signupError } = await db.auth.signUp({ email, password })
+        const { data, error: signupError } = await db.auth.signUp({ email, password })
         if (signupError) return { serverError: signupError.message }
+        if (!data.user) return { serverError: 'Something went wrong.' }
 
         const { error: profileError } = await db.from('profiles')
             .insert([{
@@ -62,6 +65,7 @@ export async function signup(state: SignupFormState | undefined, formData: FormD
             }])
         if (profileError) return { serverError: profileError.message }
 
+        createSession(data.user.id)
         return { message: 'Success' }
     } catch {
         return { serverError: 'Something went wrong.' }

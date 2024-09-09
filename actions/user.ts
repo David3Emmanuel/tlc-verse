@@ -2,54 +2,68 @@
 
 import { User, UserRole } from '@/lib/definitions'
 import supabase from '@/actions/supabase'
+import { getSession } from '@/actions/session'
 
-export async function getUsers() {
+export async function getUsers(): Promise<{ data?: User[], error?: string }> {
     const db = await supabase()
     const { data, error } = await db.from('profiles').select('*')
-    if (error) throw error
+    if (error) return { error: error.message }
 
-    return data as User[]
+    return { data }
 }
 
-export async function getUsersByRoles(roles: UserRole[]) {
+export async function getUsersByRoles(roles: UserRole[]): Promise<{ data?: User[], error?: string }> {
     const db = await supabase()
     const { data, error } = await db.from('profiles')
         .select('*')
         .overlaps('roles', roles)
-    if (error) throw error
+    if (error) return { error: error.message }
 
-    return data as User[]
+    return { data }
 }
 
-export async function getUsersByUsername(query: string) {
+export async function getUsersByUsername(query: string): Promise<{ data?: User[], error?: string }> {
     // TODO search full name as well
 
     const db = await supabase()
     const { data, error } = await db.from('profiles')
         .select('*')
         .ilike('username', `%${query}%`)
-    if (error) throw error
+    if (error) return { error: error.message }
 
-    return data as User[]
+    return { data }
 }
 
-export async function getUsersByUsernameAndRoles(query: string, roles: UserRole[]) {
+export async function getUsersByUsernameAndRoles(query: string, roles: UserRole[]): Promise<{ data?: User[], error?: string }> {
     const db = await supabase()
     const { data, error } = await db.from('profiles')
         .select('*')
         .ilike('username', `%${query}%`)
         .overlaps('roles', roles)
-    if (error) throw error
+    if (error) return { error: error.message }
 
-    return data as User[]
+    return { data }
 }
 
-export async function getUser(username: string) {
+export async function getUser(username: string): Promise<{ data?: User, error?: string }> {
     const db = await supabase()
     const { data, error } = await db.from('profiles')
         .select('*')
         .eq('username', username)
-    if (error) throw error
+    if (error) return { error: error.message }
 
-    return data?.[0] as User | undefined
+    return { data: data?.[0] }
+}
+
+export async function getCurrentUser(): Promise<{ data?: User, error?: string }> {
+    const session = await getSession()
+    if (!session) return { error: 'No session' }
+        
+    const db = await supabase()
+    const { data, error } = await db.from('profiles')
+        .select('*')
+        .eq('user_id', session.userId)
+    if (error) return { error: error.message }
+
+    return { data: data?.[0] }
 }

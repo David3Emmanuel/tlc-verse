@@ -59,3 +59,8 @@ export interface SignupFormState {
     message?: string,
     serverError?: string,
 }
+
+export type Session = {
+    userId: string,
+    expires: Date,
+}

@@ -7,7 +7,9 @@ export default async function Profile({ username }: {
     let user
 
     try {
-        user = await getUser(username)
+        const { data, error } = await getUser(username)
+        if (error) throw new Error(error)
+        user = data
     } catch {
         return <div>Something went wrong.</div>
     }

@@ -6,8 +6,6 @@ export default async function UsersDisplay({ role, query }: {
     role?: string,
     query?: string,
 }) {
-    await new Promise(resolve => setTimeout(resolve, 10_000))
-
     let results: User[]
 
     const roles = role
@@ -18,13 +16,21 @@ export default async function UsersDisplay({ role, query }: {
 
     try {
         if (roles.length > 0 && query) {
-            results = await getUsersByUsernameAndRoles(query, roles)
+            let { data, error } = await getUsersByUsernameAndRoles(query, roles)
+            if (error) throw new Error(error)
+            results = data!
         } else if (roles.length > 0) {
-            results = await getUsersByRoles(roles)
+            let { data, error } = await getUsersByRoles(roles)
+            if (error) throw new Error(error)
+            results = data!
         } else if (query) {
-            results = await getUsersByUsername(query)
+            let { data, error } = await getUsersByUsername(query)
+            if (error) throw new Error(error)
+            results = data!
         } else {
-            results = await getUsers()
+            let { data, error } = await getUsers()
+            if (error) throw new Error(error)
+            results = data!
         }
     } catch {
         return <div>Something went wrong.</div>

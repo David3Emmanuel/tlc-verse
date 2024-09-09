@@ -33,7 +33,10 @@ export default function Search({ menuClose }: {
             return
         }
         getUsersByUsername(query)
-            .then(data => setUsers(data))
+            .then(({ data, error }) => {
+                if (error) throw new Error(error)
+                setUsers(data!)
+            })
             .catch(() => setUsers(null))
     }, [query])
 
