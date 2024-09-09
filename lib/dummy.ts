@@ -7,4 +7,10 @@ export const users: User[] = [
         firstName: 'David',
         lastName: 'Emmanuel',
     },
+    {
+        username:'Emmy',
+        roles: [UserRole.STUDENT],
+        firstName: 'Peace',
+        lastName: 'Emmanuel',
+    },
 ]

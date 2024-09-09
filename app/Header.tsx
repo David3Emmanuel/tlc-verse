@@ -9,6 +9,7 @@ export default function Header() {
                 <li><NavLink href='/connect?role=tutor'>Find a Tutor</NavLink></li>
                 <li><NavLink href='/connect'>Connect</NavLink></li>
                 <li><NavLink href='/multiplayer'>Multiplayer</NavLink></li>
+                <li><NavLink href='/about'>About</NavLink></li>
                 <li><NavLink href='/signup'>Get Started</NavLink></li>
             </ul>
         </header>

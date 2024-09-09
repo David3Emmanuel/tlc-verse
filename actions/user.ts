@@ -1,3 +1,5 @@
+'use server'
+
 import { UserRole } from '@/lib/definitions'
 import { users } from '@/lib/dummy'
 
