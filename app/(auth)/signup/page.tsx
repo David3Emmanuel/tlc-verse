@@ -11,7 +11,12 @@ export default function Page() {
     const [state, action] = useFormState(signup, undefined)
 
     return (
-        <AuthForm name='Sign Up' action={action} error={state?.serverError}>
+        <AuthForm
+            name='Sign Up'
+            action={action} error={state?.serverError}
+            switchLabel='Already have an account?'
+            switchLink={<Link href='/login'>Login</Link>}
+        >
             <FormInput label='Email' placeholder='name@example.com' type='email' name='email' required state={state} />
             <FormInput label='Password' placeholder='*****' type='password' name='password' required state={state} />
             <FormInput label='Confirm Password' placeholder='*****' type='password' name='confirm' required state={state} />
@@ -27,7 +32,6 @@ export default function Page() {
                     </div>
                 ))}
             </div>
-            <p>Already have an account? <Link href='/login'>Login</Link></p>
         </AuthForm>
     )
 }

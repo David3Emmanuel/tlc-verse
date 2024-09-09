@@ -22,9 +22,9 @@ export default function Header() {
                 <li className='flex-1 justify-center flex md:hidden lg:flex items-stretch'>
                     <CTA />
                 </li>
-                <div className='flex md:hidden w-12 justify-center items-stretch'>
+                <li className='flex md:hidden w-12 justify-center items-stretch'>
                     <Menu />
-                </div>
+                </li>
             </ul>
         </header>
     )

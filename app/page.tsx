@@ -3,8 +3,8 @@ import Link from 'next/link'
 export default function Page() {
   return (<>
     <div>
-      <h1>Teach, Learn, Connect</h1>
-      <p>Unlock potential with with personalised tutoring and structured learning</p>
+      <h1 className='text-4xl font-medium'>Teach, Learn, Connect</h1>
+      <p className='italic'>Unlock potential with with personalised tutoring and structured learning</p>
       <button>Get Started</button>
     </div>
     <div>
