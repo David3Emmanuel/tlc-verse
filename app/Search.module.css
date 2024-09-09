@@ -1,0 +1,8 @@
+.users {
+    display: none;
+}
+
+.search:hover .users,
+ .search:focus-within .users {
+  display: flex;
+}

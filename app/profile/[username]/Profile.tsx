@@ -18,18 +18,10 @@ export default async function Profile({ username }: {
 
     return (
         <div>
-            <h1>{user.firstName} {user.lastName}</h1>
+            <h1>{user.first_name} {user.last_name}</h1>
             {user.roles.includes(UserRole.STUDENT) && <StudentActions />}
             {user.roles.includes(UserRole.PARENT) && <ParentActions />}
             {user.roles.includes(UserRole.TUTOR) && <TutorActions />}
-        </div>
-    )
-}
-
-export function ProfilePlaceholder() {
-    return (
-        <div>
-            <h1>Loading...</h1>
         </div>
     )
 }

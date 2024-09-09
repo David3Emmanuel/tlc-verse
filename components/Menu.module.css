@@ -1,0 +1,14 @@
+.menu li {
+    display: block;
+    color: white;
+}
+
+.menu li a:hover {
+    background-color: inherit;
+    color: inherit;
+}
+
+.active {
+    background-color: hsl(0, 0%, 90%);
+    color: hsl(0, 0%, 10%);
+}

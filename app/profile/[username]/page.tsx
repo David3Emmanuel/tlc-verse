@@ -1,5 +1,5 @@
 import { getUsers } from '@/actions/user'
-import Profile, { ProfilePlaceholder } from '@/app/profile/[username]/Profile'
+import Profile from '@/app/profile/[username]/Profile'
 import { Suspense } from 'react'
 
 export async function generateStaticParams() {
@@ -21,7 +21,7 @@ export default function Page({ params }: {
 }) {
     return (<>
         <h1>{params.username}</h1>
-        <Suspense fallback={<ProfilePlaceholder />}>
+        <Suspense fallback={<div>Loading...</div>}>
             <Profile username={params.username} />
         </Suspense>
     </>)
