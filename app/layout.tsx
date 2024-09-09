@@ -4,7 +4,10 @@ import Header from '@/app/Header'
 
 
 export const metadata: Metadata = {
-  title: 'TLCverse',
+  title: {
+    template: '%s | TLCverse',
+    default: 'TLCverse',
+  },
   description: 'Teach, Learn, Connect',
 }
 

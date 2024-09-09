@@ -7,6 +7,15 @@ export async function generateStaticParams() {
     return users.map(user => { username: user.username })
 }
 
+export function generateMetadata({ params }: {
+    params: { username: string },
+}) {
+    return {
+        title: `${params.username}'s Profile`,
+        description: `View ${params.username}'s profile on TLCverse`,
+    }
+}
+
 export default function Page({ params }: {
     params: { username: string },
 }) {

@@ -1,4 +1,10 @@
 import { submitFeedback } from '@/actions/feedback'
+import { Metadata } from 'next'
+
+export const metadata: Metadata = {
+    title: 'About',
+    description: 'About TLCverse',
+}
 
 export default function About() {
     return (<>
