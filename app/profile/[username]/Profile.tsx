@@ -4,10 +4,18 @@ import { UserRole } from '@/lib/definitions'
 export default async function Profile({ username }: {
     username: string,
 }) {
-    const user = await getUser(username)
+    let user
+
+    try {
+        user = await getUser(username)
+    } catch {
+        return <div>Something went wrong.</div>
+    }
+
     if (!user) {
         return <div>User not found</div>
     }
+
     return (
         <div>
             <h1>{user.firstName} {user.lastName}</h1>

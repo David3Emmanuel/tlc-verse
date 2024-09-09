@@ -15,13 +15,17 @@ export default async function UsersDisplay() {
         .map(roleString => UserRole[roleString.toUpperCase() as keyof typeof UserRole])
         || []
 
-    if (roles.length > 0) {
-        results = await getUsersWithFilter(roles)
-    } else {
-        results = await getUsers()
+    try {
+        if (roles.length > 0) {
+            results = await getUsersWithFilter(roles)
+        } else {
+            results = await getUsers()
+        }
+    } catch {
+        return <div>Something went wrong.</div>
     }
 
-    const searchHeading = roles.length > 0 ? roles.map(role => role+'s').join(', ') : 'users'
+    const searchHeading = roles.length > 0 ? roles.map(role => role + 's').join(', ') : 'users'
     return (
         <div>
             <h1>Showing all {searchHeading}</h1>
