@@ -3,15 +3,11 @@
 import { useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import { User, UserRole } from '@/lib/definitions'
-import { users } from '@/lib/dummy'
+import { getUsers, getUsersWithFilter } from '@/actions/user'
 
 export default async function UsersDisplay() {
     const searchParams = useSearchParams()
     let results: User[]
-    
-    await new Promise((resolve, reject) => {
-        setTimeout(resolve, 5000)
-    })
 
     const roles = searchParams.get('role')
         ?.split(',')
@@ -20,14 +16,9 @@ export default async function UsersDisplay() {
         || []
 
     if (roles.length > 0) {
-        results = users.filter(user => {
-            for (const role of user.roles) {
-                if (roles.includes(role)) return true
-            }
-            return false
-        })
+        results = await getUsersWithFilter(roles)
     } else {
-        results = users
+        results = await getUsers()
     }
 
     const searchHeading = roles.length > 0 ? roles.map(role => role+'s').join(', ') : 'users'

@@ -1,20 +1,32 @@
 'use server'
 
-import { UserRole } from '@/lib/definitions'
-import { users } from '@/lib/dummy'
+import { User, UserRole } from '@/lib/definitions'
+import supabase from '@/actions/supabase'
 
-export function getUsers() {
-    return users
+export async function getUsers(): Promise<User[]> {
+    const db = await supabase()
+    const { data, error } = await db.from('profiles').select('*')
+    if (error) throw error
+
+    return data
 }
 
-export function getStudents() {
-    return users.filter(user => user.roles.includes(UserRole.STUDENT))
+export async function getUsersWithFilter(roles: UserRole[]): Promise<User[]> {
+    const db = await supabase()
+    const { data, error } = await db.from('profiles')
+        .select('*')
+        .overlaps('roles', roles)
+    if (error) throw error
+
+    return data
 }
 
-export function getParents() {
-    return users.filter(user => user.roles.includes(UserRole.PARENT))
-}
+export async function getUser(username: string) {
+    const db = await supabase()
+    const { data, error } = await db.from('profiles')
+        .select('*')
+        .eq('username', username)
+    if (error) throw error
 
-export function getTutors() {
-    return users.filter(user => user.roles.includes(UserRole.TUTOR))
+    return data?.[0]
 }

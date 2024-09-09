@@ -1,11 +1,10 @@
+import { getUser } from '@/actions/user'
 import { UserRole } from '@/lib/definitions'
-import { users } from '@/lib/dummy'
 
 export default async function Profile({ username }: {
     username: string,
 }) {
-    await new Promise((resolve) => setTimeout(resolve, 1000))
-    const user = users.find(user => user.username === username)
+    const user = await getUser(username)
     if (!user) {
         return <div>User not found</div>
     }
@@ -30,7 +29,7 @@ export function ProfilePlaceholder() {
 function StudentActions() {
     return (
         <div>
-            <button>Save as child</button>
+            <button>Add as child</button>
             <button>Teach</button>
             <button>Connect</button>
         </div>

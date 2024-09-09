@@ -1,8 +1,9 @@
-import { users } from '@/lib/dummy'
+import { getUsers } from '@/actions/user'
 import Profile, { ProfilePlaceholder } from '@/app/profile/[username]/Profile'
 import { Suspense } from 'react'
 
-export function generateStaticParams() {
+export async function generateStaticParams() {
+    const users = await getUsers()
     return users.map(user => { username: user.username })
 }
 
