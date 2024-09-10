@@ -64,3 +64,8 @@ export type Session = {
     userId: string,
     expires: Date,
 }
+
+export interface FiltersData {
+    roles?: UserRole[],
+    query?: string,
+}
