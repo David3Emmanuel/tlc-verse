@@ -23,10 +23,10 @@ export default function Page() {
             <FormInput label='Username' placeholder='Username' name='username' required state={state} />
             <FormInput label='First Name' placeholder='First name' name='first' state={state} />
             <FormInput label='Last Name' placeholder='Last name' name='last' state={state} />
-            <label htmlFor='roles'>Who are you?</label>
+            <h3 className='mt-2 font-medium text-center'>Which role best describes you?</h3>
             <div>
                 {Object.values(UserRole).map(role => (
-                    <div key={role} className='flex'>
+                    <div key={role} className='flex w-full justify-center'>
                         <label className='w-48' htmlFor={role}>{role}</label>
                         <input type='checkbox' name={role} />
                     </div>

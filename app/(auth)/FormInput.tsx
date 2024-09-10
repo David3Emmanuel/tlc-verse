@@ -11,9 +11,9 @@ export default function FormInput({ placeholder, type, name, required, label, st
     },
 }) {
     return (<>
-        <div className='flex justify-between'>
+        <div className='flex max-w-full justify-center gap-2'>
             {label && (
-                <label className='p-2 text-left' htmlFor={name}>{label}<span className='text-[#ff0000]'>{required ? ' *' : ''}</span></label>
+                <label className='p-2 text-md text-left w-48' htmlFor={name}>{label}<span className='text-[#ff0000]'>{required ? ' *' : ''}</span></label>
             )}
             <input
                 placeholder={placeholder}
