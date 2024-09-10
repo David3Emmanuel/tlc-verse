@@ -1,7 +1,8 @@
 import 'server-only'
-import { JWTPayload, SignJWT, jwtVerify } from 'jose'
+import { SignJWT, jwtVerify } from 'jose'
 import { Session } from '@/lib/definitions'
 import { cookies } from 'next/headers'
+import { redirect } from 'next/navigation'
 
 
 const sessionKey = process.env.SESSION_KEY
@@ -38,6 +39,8 @@ export async function createSession(userId: string) {
         sameSite: 'lax',
         path: '/',
     })
+
+    redirect('/')
 }
 
 export async function updateSession() {
