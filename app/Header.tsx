@@ -7,7 +7,7 @@ import CTA from '@/components/CTA'
 export default function Header() {
     return (
         <header className='flex md:flex-col lg:flex-row justify-between items-stretch bg-white p-2 gap-y-2'>
-            <div className='flex flex-1 gap-2 justify-between items-stretch'>
+            <div className='flex flex-1 gap-2 justify-between items-center'>
                 <Link href='/' className='text-xl font-medium p-2 flex items-center'>TLCverse</Link>
                 <div className='hidden md:flex flex-1 justify-center'><Search /></div>
                 <div className='hidden md:flex lg:hidden items-stretch'>

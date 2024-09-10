@@ -58,12 +58,16 @@ export async function getUser(username: string): Promise<{ data?: User, error?: 
 export async function getCurrentUser(): Promise<{ data?: User, error?: string }> {
     const session = await getSession()
     if (!session) return { error: 'No session' }
-        
-    const db = await supabase()
-    const { data, error } = await db.from('profiles')
-        .select('*')
-        .eq('user_id', session.userId)
-    if (error) return { error: error.message }
 
-    return { data: data?.[0] }
+    try {
+        const db = await supabase()
+        const { data, error } = await db.from('profiles')
+            .select('*')
+            .eq('user_id', session.userId)
+        if (error) return { error: error.message }
+
+        return { data: data?.[0] }
+    } catch {
+        return { error: 'Something went wrong' }
+    }
 }
