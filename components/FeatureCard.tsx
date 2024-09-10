@@ -7,7 +7,7 @@ export default function FeatureCard({ feature, link, children }: {
 }) {
     return (
         <li>
-            <Link href={link} className='px-2 py-5 bg-neutral-700 rounded-md shadow shadow-neutral-500/50 w-72 max-w-full h-full flex flex-col gap-2 transition-transform hover:scale-110'>
+            <Link href={link} className='card bg-neutral-700 w-72 max-w-full h-full'>
                 <h3 className='font-2xl font-medium'>{feature}</h3>
                 <div className='flex-1'>
                     {children}
