@@ -1,4 +1,5 @@
 import { submitFeedback } from '@/actions/feedback'
+import Rating from '@/components/Rating'
 import { Metadata } from 'next'
 
 export const metadata: Metadata = {
@@ -26,7 +27,8 @@ export default function About() {
             <div className='flex-1 p-5 flex flex-col items-center'>
                 <h3 className='text-xl font-medium mb-2'>Leave your feedback</h3>
                 <form action={submitFeedback} className='w-full max-w-96 flex flex-col items-center gap-2'>
-                    <textarea rows={5} name='feedback' className='rounded-md w-full p-2' required />
+                    <textarea rows={5} name='feedback' className='rounded-md w-full p-2' />
+                    <Rating name='rating' />
                     <button type='submit' className='px-5 py-2 bg-blue-500 text-white font-medium rounded m-auto'>Submit Feedback</button>
                 </form>
             </div>
