@@ -1,4 +1,4 @@
-import { redirect } from "next/navigation"
+import { redirect, useSearchParams } from 'next/navigation'
 
 export default function AuthForm({ name, action, error, success, children, switchLabel, switchLink }: {
     name: string,
@@ -9,7 +9,8 @@ export default function AuthForm({ name, action, error, success, children, switc
     switchLabel: string,
     switchLink: React.ReactNode,
 }) {
-    if (success) redirect('/')
+    const searchParams = useSearchParams()
+    if (success) redirect(searchParams.get('redirect') || '/')
 
     return (
         <form action={action} className='flex flex-col gap-2 w-full h-full form:w-96 form:h-auto form:my-5 mx-auto max-w-full px-2 py-5 bg-white form:shadow form:rounded-lg'>

@@ -11,8 +11,8 @@ export default function RoleSelect({ filters, setFilters }: {
     const [showOptions, setShowOptions] = useState(false)
 
     return (
-        <div className='relative w-32 rounded border p-2  bg-neutral-50'>
-            <div className='flex items-center cursor-default' onClick={() => setShowOptions(prev => !prev)}>
+        <div className='relative w-32 rounded border bg-neutral-50'>
+            <div className='flex items-center p-2 cursor-default' onClick={() => setShowOptions(prev => !prev)}>
                 <p className='flex-1 text-center'>Roles</p>
                 <Icon icon={showOptions ? 'unfold_less' : 'unfold_more'} />
             </div>

@@ -17,7 +17,7 @@ export default function Header() {
             <ul className='flex-1 flex justify-end items-stretch gap-1'>
                 <NavLink href='/connect?role=tutor'>Find a Tutor</NavLink>
                 <NavLink href='/connect'>Connect</NavLink>
-                <NavLink href='/multiplayer'>Multiplayer</NavLink>
+                <NavLink href='/game'>Multiplayer</NavLink>
                 <NavLink href='/about'>About</NavLink>
                 <li className='flex-1 justify-end md:justify-center flex md:hidden lg:flex items-stretch'>
                     <CTA />

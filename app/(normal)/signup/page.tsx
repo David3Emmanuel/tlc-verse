@@ -1,8 +1,8 @@
 'use client'
 
 import Link from 'next/link'
-import FormInput from '@/app/(auth)/FormInput'
-import AuthForm from '@/app/(auth)/AuthForm'
+import FormInput from '@/components/FormInput'
+import AuthForm from '@/components/AuthForm'
 import { signup } from '@/actions/auth'
 import { useFormState } from 'react-dom'
 import { UserRole } from '@/lib/definitions'

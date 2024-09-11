@@ -7,7 +7,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { ChangeEvent, useEffect, useState } from 'react'
 
-import styles from '@/app/Search.module.css'
+import styles from '@/components/Search.module.css'
 
 export default function Search({inMenu}: {
     inMenu?: boolean,

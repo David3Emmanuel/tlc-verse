@@ -38,13 +38,16 @@ export default function Tabs({ tabs }: {
     return (<div className='flex-1 flex flex-col sm:bg-white sm:card px-5 sm:px-6 no-hover'>
         <div className='flex gap-5'>
             {tabNames.map((name, i) => (
-                <button
-                    // href={`${pathname}?tab=${name}`} key={i}
-                    onClick={() => setCurrentTab(name)} key={i}
+                <Link
+                    href={`${pathname}?tab=${name}`} key={i}
+                    onClick={e => {
+                        e.preventDefault()
+                        setCurrentTab(name)
+                    }}
                     className={`text-neutral-700 text-xl border-b-2 ${currentTab === name ? 'border-neutral-500' : 'border-transparent hover:border-neutral-300'}`}
                 >
                     {tabs[name].name}
-                </button>
+                </Link>
             ))}
         </div>
         <div className='flex-1'>
