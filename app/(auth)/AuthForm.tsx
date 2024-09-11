@@ -1,11 +1,16 @@
-export default function AuthForm({ name, action, error, children, switchLabel, switchLink }: {
+import { redirect } from "next/navigation"
+
+export default function AuthForm({ name, action, error, success, children, switchLabel, switchLink }: {
     name: string,
     action?: (formData: FormData) => void,
     error?: string,
+    success?: string,
     children: React.ReactNode,
     switchLabel: string,
     switchLink: React.ReactNode,
 }) {
+    if (success) redirect('/')
+
     return (
         <form action={action} className='flex flex-col gap-2 w-full h-full form:w-96 form:h-auto form:my-5 mx-auto max-w-full px-2 py-5 bg-white form:shadow form:rounded-lg'>
             <h1 className='text-xl my-2 font-medium text-center'>{name.toUpperCase()}</h1>

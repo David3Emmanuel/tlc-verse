@@ -1,6 +1,6 @@
 'use server'
 
-import { LoginFormState, SignupFormState, LoginSchema, SignupSchema, UserRole } from '@/lib/definitions'
+import { LoginFormState, SignupFormState, LoginSchema, SignupSchema, UserRole, User } from '@/lib/definitions'
 import supabase from '@/actions/supabase'
 import { createSession } from '@/actions/session'
 
@@ -23,7 +23,12 @@ export async function login(state: LoginFormState | undefined, formData: FormDat
         const { data, error } = await db.auth.signInWithPassword({ email, password })
         if (error) return { serverError: error.message }
 
-        createSession(data?.user.id)
+        const { data: profileData, error: profileError } = await db.from('profiles')
+            .select('*')
+            .eq('user_id', data?.user.id)
+        if (profileError) return { serverError: profileError.message }
+
+        createSession(data?.user.id, (profileData[0] as User).username)
         return { message: 'Success' }
     } catch {
         return { serverError: 'Something went wrong.' }
@@ -65,7 +70,7 @@ export async function signup(state: SignupFormState | undefined, formData: FormD
             }])
         if (profileError) return { serverError: profileError.message }
 
-        createSession(data.user.id)
+        createSession(data.user.id, username)
         return { message: 'Success' }
     } catch {
         return { serverError: 'Something went wrong.' }

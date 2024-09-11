@@ -1,8 +1,9 @@
 'use server'
 
-import { User, UserRole } from '@/lib/definitions'
+import { User, UserRole, SessionUser } from '@/lib/definitions'
 import supabase from '@/actions/supabase'
 import { getSession } from '@/actions/session'
+import { cache } from 'react'
 
 export async function getUsers(): Promise<{ data?: User[], error?: string }> {
     const db = await supabase()
@@ -45,29 +46,28 @@ export async function getUsersByUsernameAndRoles(query: string, roles: UserRole[
     return { data }
 }
 
-export async function getUser(username: string): Promise<{ data?: User, error?: string }> {
-    const db = await supabase()
-    const { data, error } = await db.from('profiles')
-        .select('*')
-        .eq('username', username)
-    if (error) return { error: error.message }
-
-    return { data: data?.[0] }
-}
-
-export async function getCurrentUser(): Promise<{ data?: User, error?: string }> {
-    const session = await getSession()
-    if (!session) return { error: 'No session' }
-
-    try {
+export const getUser = cache(
+    async (username: string): Promise<{ data?: User, error?: string }> => {
         const db = await supabase()
         const { data, error } = await db.from('profiles')
             .select('*')
-            .eq('user_id', session.userId)
+            .eq('username', username)
         if (error) return { error: error.message }
 
         return { data: data?.[0] }
-    } catch {
-        return { error: 'Something went wrong' }
     }
-}
+)
+
+export const getCurrentUser = cache(
+    async (): Promise<{ data?: SessionUser, error?: string }> => {
+        const session = await getSession()
+        if (!session) return { error: 'No session' }
+
+        return {
+            data: {
+                username: session.username,
+                user_id: session.userId,
+            }
+        }
+    }
+)

@@ -10,6 +10,8 @@ export default function FormInput({ placeholder, type, name, required, label, st
         },
     },
 }) {
+    // TODO show/hide password
+
     return (<>
         <div className='flex max-w-full justify-center gap-2'>
             {label && (

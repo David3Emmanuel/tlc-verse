@@ -10,6 +10,17 @@ export interface User {
     profile_pic?: string,
 }
 
+export type Session = {
+    userId: string,
+    username: string,
+    expires: Date,
+}
+
+export interface SessionUser {
+    user_id: string,
+    username: string,
+}
+
 export enum UserRole {
     STUDENT = 'student',
     TUTOR = 'tutor',
@@ -60,11 +71,6 @@ export interface SignupFormState {
     },
     message?: string,
     serverError?: string,
-}
-
-export type Session = {
-    userId: string,
-    expires: Date,
 }
 
 export interface FiltersData {

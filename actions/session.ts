@@ -28,9 +28,9 @@ export async function decrypt(session: string | undefined = '') {
     }
 }
 
-export async function createSession(userId: string) {
+export async function createSession(userId: string, username: string) {
     const expires = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000)
-    const session = await encrypt({ userId, expires } as Session)
+    const session = await encrypt({ userId, expires, username } as Session)
 
     cookies().set('session', session, {
         httpOnly: true,
@@ -39,8 +39,6 @@ export async function createSession(userId: string) {
         sameSite: 'lax',
         path: '/',
     })
-
-    redirect('/')
 }
 
 export async function updateSession() {

@@ -49,7 +49,7 @@ export default async function Page({ params }: {
 
     // TODO add followers and following (friends = mutual)
     // TODO add contact info
-    // FIXME profile picture return default when tab is switched
+    // FIXME profile picture returns default when tab is switched
 
     return (
         <div className='p-2 flex flex-col gap-5 sm:flex-row h-full justify-between bg-white sm:bg-transparent'>

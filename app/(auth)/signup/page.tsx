@@ -14,6 +14,7 @@ export default function Page() {
         <AuthForm
             name='Sign Up'
             action={action} error={state?.serverError}
+            success={state?.message}
             switchLabel='Already have an account?'
             switchLink={<Link href='/login'>Login</Link>}
         >
