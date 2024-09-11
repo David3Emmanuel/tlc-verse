@@ -1,13 +1,18 @@
 import Icon from '@/components/Icon'
 import { User } from '@/lib/definitions'
+import Image from 'next/image'
 
 export default function ProfilePic({ user }: {
     user: User,
 }) {
     if (!user.profile_pic) return <ProfilePicDefault />
     return (
-        <div className='m-auto flex w-24 h-24 sm:w-48 sm:h-48 border border-neutral-300/50 shadow rounded-full overflow-hidden'>
-            <img src={user.profile_pic} className='w-full h-full object-cover' alt={`${user.username}'s profile picture`} />
+        <div className='m-auto flex w-24 h-24 sm:w-48 sm:h-48 border relative border-neutral-300/50 shadow rounded-full overflow-hidden'>
+            <Image
+                src={user.profile_pic}
+                alt={`${user.username}'s profile picture`}
+                fill priority sizes='12rem'
+            />
         </div>
     )
 }

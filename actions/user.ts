@@ -5,46 +5,54 @@ import supabase from '@/actions/supabase'
 import { getSession } from '@/actions/session'
 import { cache } from 'react'
 
-export async function getUsers(): Promise<{ data?: User[], error?: string }> {
-    const db = await supabase()
-    const { data, error } = await db.from('profiles').select('*')
-    if (error) return { error: error.message }
+export const getUsers = cache(
+    async function (): Promise<{ data?: User[], error?: string }> {
+        const db = await supabase()
+        const { data, error } = await db.from('profiles').select('*')
+        if (error) return { error: error.message }
 
-    return { data }
-}
+        return { data }
+    }
+)
 
-export async function getUsersByRoles(roles: UserRole[]): Promise<{ data?: User[], error?: string }> {
-    const db = await supabase()
-    const { data, error } = await db.from('profiles')
-        .select('*')
-        .overlaps('roles', roles)
-    if (error) return { error: error.message }
+export const getUsersByRoles = cache(
+    async function (roles: UserRole[]): Promise<{ data?: User[], error?: string }> {
+        const db = await supabase()
+        const { data, error } = await db.from('profiles')
+            .select('*')
+            .overlaps('roles', roles)
+        if (error) return { error: error.message }
 
-    return { data }
-}
+        return { data }
+    }
+)
 
-export async function getUsersByUsername(query: string): Promise<{ data?: User[], error?: string }> {
-    // TODO search full name as well
+export const getUsersByUsername = cache(
+    async function (query: string): Promise<{ data?: User[], error?: string }> {
+        // TODO search full name as well
 
-    const db = await supabase()
-    const { data, error } = await db.from('profiles')
-        .select('*')
-        .ilike('username', `%${query}%`)
-    if (error) return { error: error.message }
+        const db = await supabase()
+        const { data, error } = await db.from('profiles')
+            .select('*')
+            .ilike('username', `%${query}%`)
+        if (error) return { error: error.message }
 
-    return { data }
-}
+        return { data }
+    }
+)
 
-export async function getUsersByUsernameAndRoles(query: string, roles: UserRole[]): Promise<{ data?: User[], error?: string }> {
-    const db = await supabase()
-    const { data, error } = await db.from('profiles')
-        .select('*')
-        .ilike('username', `%${query}%`)
-        .overlaps('roles', roles)
-    if (error) return { error: error.message }
+export const getUsersByUsernameAndRoles = cache(
+    async function (query: string, roles: UserRole[]): Promise<{ data?: User[], error?: string }> {
+        const db = await supabase()
+        const { data, error } = await db.from('profiles')
+            .select('*')
+            .ilike('username', `%${query}%`)
+            .overlaps('roles', roles)
+        if (error) return { error: error.message }
 
-    return { data }
-}
+        return { data }
+    }
+)
 
 export const getUser = cache(
     async (username: string): Promise<{ data?: User, error?: string }> => {

@@ -2,7 +2,6 @@ import 'server-only'
 import { SignJWT, jwtVerify } from 'jose'
 import { Session } from '@/lib/definitions'
 import { cookies } from 'next/headers'
-import { redirect } from 'next/navigation'
 
 
 const sessionKey = process.env.SESSION_KEY

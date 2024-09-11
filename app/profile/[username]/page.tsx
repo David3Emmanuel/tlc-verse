@@ -66,5 +66,6 @@ export default async function Page({ params }: {
             <Suspense fallback={null}>
                 <Tabs tabs={userTabs} />
             </Suspense>
-        </div>)
+        </div>
+    )
 }
