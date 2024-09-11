@@ -14,7 +14,7 @@ export default function RoleSelect({ filters, setFilters }: {
         <div className='relative w-32 rounded border p-2  bg-neutral-50'>
             <div className='flex items-center cursor-default' onClick={() => setShowOptions(prev => !prev)}>
                 <p className='flex-1 text-center'>Roles</p>
-                <Icon icon={showOptions ? 'unfold_less' : 'unfold_more'} fitWidth />
+                <Icon icon={showOptions ? 'unfold_less' : 'unfold_more'} />
             </div>
             <div className={`left-0 right-0 rounded border p-2 absolute top-[calc(100%+5px)] bg-inherit flex flex-col gap-2 transition-transform origin-top ${showOptions ? 'scale-y-100' : 'scale-y-0'}`}>
                 {Object.values(UserRole).map(role => (

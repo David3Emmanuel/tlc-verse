@@ -6,6 +6,8 @@ export interface User {
     first_name?: string,
     last_name?: string,
     roles: UserRole[],
+    bio: string,
+    profile_pic?: string,
 }
 
 export enum UserRole {
