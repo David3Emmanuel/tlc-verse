@@ -13,19 +13,39 @@ export default function Tabs({ tabs }: {
     },
 }) {
     const tabNames = Object.keys(tabs)
-    const [currentTab, setCurrentTab] = useState(tabNames[0])
+    const [currentTab, _setCurrentTab] = useState(tabNames[0])
 
     const pathname = usePathname()
     const searchParams = useSearchParams()
 
+    const setCurrentTab = (tab: string | null) => {
+        const newSearchParams = new URLSearchParams(searchParams.toString())
+        if (tab && tabNames.includes(tab)) {
+            newSearchParams.set('tab', tab)
+            _setCurrentTab(tab)
+        } else {
+            newSearchParams.delete('tab')
+            _setCurrentTab(tabNames[0])
+        }
+        window.history.replaceState(null, '', `?${newSearchParams.toString()}`)
+    }
+
     useEffect(() => {
         const tab = searchParams.get('tab')
-        setCurrentTab((tab && tabNames.includes(tab)) ? tab : tabNames[0])
+        setCurrentTab(tab)
     }, [searchParams])
 
     return (<div className='flex-1 flex flex-col sm:bg-white sm:card px-5 sm:px-6 no-hover'>
         <div className='flex gap-5'>
-            {tabNames.map((name, i) => <Link className={`text-neutral-700 text-xl ${currentTab === name ? 'border-b-2 border-neutral-500' : 'hover:border-b-2 hover:border-neutral-300'}`} href={`${pathname}/?tab=${name}`} key={i}>{tabs[name].name}</Link>)}
+            {tabNames.map((name, i) => (
+                <button
+                    // href={`${pathname}?tab=${name}`} key={i}
+                    onClick={() => setCurrentTab(name)} key={i}
+                    className={`text-neutral-700 text-xl border-b-2 ${currentTab === name ? 'border-neutral-500' : 'border-transparent hover:border-neutral-300'}`}
+                >
+                    {tabs[name].name}
+                </button>
+            ))}
         </div>
         <div className='flex-1'>
             {tabs[currentTab].content}

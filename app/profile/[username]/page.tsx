@@ -49,7 +49,6 @@ export default async function Page({ params }: {
 
     // TODO add followers and following (friends = mutual)
     // TODO add contact info
-    // FIXME profile picture returns default when tab is switched
 
     return (
         <div className='p-2 flex flex-col gap-5 sm:flex-row h-full justify-between bg-white sm:bg-transparent'>
@@ -64,6 +63,8 @@ export default async function Page({ params }: {
                     {user.bio && <p className='my-2'>{user.bio}</p>}
                 </div>
             </div>
-            <Tabs tabs={userTabs} />
+            <Suspense fallback={null}>
+                <Tabs tabs={userTabs} />
+            </Suspense>
         </div>)
 }
