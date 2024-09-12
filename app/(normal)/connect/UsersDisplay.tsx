@@ -1,6 +1,7 @@
 import { User, UserRole } from '@/lib/definitions'
 import { getUsers, getUsersByRoles, getUsersByUsername, getUsersByUsernameAndRoles } from '@/actions/user'
 import Link from 'next/link'
+import UserDisplay from '@/components/UserDisplay'
 
 export default async function UsersDisplay({ roles, query }: {
     roles: UserRole[],
@@ -44,7 +45,7 @@ export default async function UsersDisplay({ roles, query }: {
         <>
             <h1 className='text-lg font-medium'>Showing all {roleHeading + queryHeading}</h1>
             {results.length > 0 && <div className='flex flex-col gap-2'>
-                {results.map((user, i) => <Link key={i} href={`/profile/${user.username}`}>{user.username}</Link>)}
+                {results.map((user, i) => <UserDisplay key={i} user={user} />)}
             </div>}
             {results.length === 0 && <p>No results</p>}
         </>
