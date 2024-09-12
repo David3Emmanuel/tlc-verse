@@ -1,4 +1,4 @@
-import { getUser, getUsers } from '@/actions/user'
+import { getUserByUsername, getUsers } from '@/actions/user'
 import ProfilePic, { ProfilePicPlaceholder } from '@/components/ProfilePic'
 import Tabs from '@/components/Tabs'
 import { Suspense } from 'react'
@@ -24,7 +24,7 @@ export default async function Page({ params }: {
     let user
 
     try {
-        const { data, error } = await getUser(params.username)
+        const { data, error } = await getUserByUsername(params.username)
         if (error) throw new Error(error)
         user = data
     } catch (e) {

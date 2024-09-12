@@ -1,11 +1,11 @@
 'use client'
 
-import { Game } from '@/lib/definitions'
+import { Game, Question } from '@/lib/definitions'
 import { useWatchDB } from '@/lib/realtime'
 import { useContext, useEffect, useState } from 'react'
-import { Context } from './context'
+import { Context } from '@/app/game/utils/context'
 
-export function useLobby(joinLobby: () => Promise<{ error?: Error }>) {
+export function useLobby(joinLobby: () => Promise<{ error?: string }>) {
     const [games, payload] = useWatchDB<Game, string>('games')
     const [game, setGame] = useState<Game | null>(null)
     const { currentUser } = useContext(Context)
@@ -27,4 +27,41 @@ export function useLobby(joinLobby: () => Promise<{ error?: Error }>) {
     }, [games, payload])
 
     return game
+}
+
+export function useGame(
+    game: Game,
+    serverQuestions: Question[],
+    getQuestion: (questionId: number) => Promise<{ data?: Question, error?: string }>,
+) {
+    const [_, gamePayload] = useWatchDB<Game, string>('games')
+    const [__, questionsPayload] = useWatchDB<{ id: number, game_id: string, question_id: number, created_at: Date }, number>('games_questions')
+
+    const [player1Score, setPlayer1Score] = useState(game.player1_score)
+    const [player2Score, setPlayer2Score] = useState(game.player2_score)
+    const [questions, setQuestions] = useState(serverQuestions)
+
+    useEffect(() => {
+        if (gamePayload?.eventType === 'UPDATE' && gamePayload.old.id === game.id) {
+            setPlayer1Score(gamePayload.new.player1_score)
+            setPlayer2Score(gamePayload.new.player2_score)
+        }
+    }, [gamePayload])
+
+    useEffect(() => {
+        if (questionsPayload?.eventType === 'INSERT') {
+            const questionId = questionsPayload.new.question_id
+            getQuestion(questionId)
+                .then(({data: newQuestion, error}) => {
+                    console.log(newQuestion, error)
+                    if (error) console.error(error)
+                    setQuestions(prev => [...prev, newQuestion!])
+                })
+        }
+    }, [__, questionsPayload])
+
+    return {
+        scores: [player1Score, player2Score] as [number, number],
+        questions,
+    }
 }

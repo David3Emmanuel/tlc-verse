@@ -110,3 +110,10 @@ export interface Game {
     player2: string
     started_at: Date
 }
+
+export interface Question {
+    id: number
+    question: string
+    options: string[]
+    correct_option_index: number
+}

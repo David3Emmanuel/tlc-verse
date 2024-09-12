@@ -54,12 +54,24 @@ export const getUsersByUsernameAndRoles = cache(
     }
 )
 
-export const getUser = cache(
+export const getUserByUsername = cache(
     async (username: string): Promise<{ data?: User, error?: string }> => {
         const db = await supabase()
         const { data, error } = await db.from('profiles')
             .select('*')
             .eq('username', username)
+        if (error) return { error: error.message }
+
+        return { data: data?.[0] }
+    }
+)
+
+export const getUserById = cache(
+    async (id: string): Promise<{ data?: User, error?: string }> => {
+        const db = await supabase()
+        const { data, error } = await db.from('profiles')
+            .select('*')
+            .eq('user_id', id)
         if (error) return { error: error.message }
 
         return { data: data?.[0] }
