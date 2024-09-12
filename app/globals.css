@@ -34,6 +34,6 @@
     }
 
     .button {
-        @apply bg-blue-500 w-40 text-white font-medium px-5 py-2 rounded m-auto;
+        @apply flex bg-blue-500 hover:bg-blue-600 w-40 text-white font-medium px-5 py-2 rounded mx-auto justify-center items-center text-center;
     }
 }

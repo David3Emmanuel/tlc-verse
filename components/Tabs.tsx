@@ -35,8 +35,8 @@ export default function Tabs({ tabs }: {
         setCurrentTab(tab)
     }, [searchParams])
 
-    return (<div className='flex-1 flex flex-col sm:bg-white sm:card px-5 sm:px-6 no-hover'>
-        <div className='flex gap-5'>
+    return (<div className='flex-1 flex flex-col gap-2 sm:bg-white sm:card px-5 sm:px-6 no-hover'>
+        <div className='flex gap-5 border border-neutral-50 rounded-full px-5 py-2'>
             {tabNames.map((name, i) => (
                 <Link
                     href={`${pathname}?tab=${name}`} key={i}
@@ -50,7 +50,7 @@ export default function Tabs({ tabs }: {
                 </Link>
             ))}
         </div>
-        <div className='flex-1'>
+        <div className='flex-1 p-2'>
             {tabs[currentTab].content}
         </div>
     </div>)

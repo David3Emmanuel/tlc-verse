@@ -1,8 +1,11 @@
+import { deleteSession } from '@/actions/session'
 import { getCurrentUser, getUserByUsername, getUsers } from '@/actions/user'
 import ProfilePic, { ProfilePicPlaceholder } from '@/components/ProfilePic'
 import Tabs from '@/components/Tabs'
 import Link from 'next/link'
-import { Suspense, use } from 'react'
+import { Suspense } from 'react'
+import Logout from './Logout'
+import { UserRole } from '@/lib/definitions'
 
 export async function generateStaticParams(): Promise<{ username: string }[]> {
     const { data: users, error } = await getUsers()
@@ -44,24 +47,36 @@ export default async function Page({ params }: {
         'parent': { name: 'Parent', content: <p>Parent</p> },
     }
 
-    const userTabs = Object.fromEntries(user.roles.map(role => {
+    const sortedRoles = Object.values(UserRole).filter(role => user.roles.includes(role))
+    const userTabs = Object.fromEntries(sortedRoles.map(role => {
         return [role as string, allTabs[role]]
     }))
+
 
     // TODO add followers and following (friends = mutual)
     // TODO add contact info
 
-    const {data: currentUser, error} = await getCurrentUser()
+    const { data: currentUser } = await getCurrentUser()
 
     return (
         <div className='p-2 flex flex-col gap-5 sm:flex-row h-full justify-between bg-white sm:bg-transparent'>
             <div className='px-2 sm:px-0 flex sm:flex-col items-center gap-5 sm:gap-0 sm:bg-white sm:card sm:w-56 no-hover'>
-                <Suspense fallback={<ProfilePicPlaceholder />}>
-                    <ProfilePic user={user} />
-                </Suspense>
-                {currentUser && currentUser.user_id === user.user_id && (
-                    <Link href='/settings' className='px-5 py-2 mt-2 font-medium bg-blue-50 border rounded border-neutral-300'>Edit Profile</Link>
-                )}
+                <div className='flex flex-col gap-2'>
+                    <Suspense fallback={<ProfilePicPlaceholder />}>
+                        <ProfilePic user={user} />
+                    </Suspense>
+                    {currentUser && currentUser.user_id === user.user_id
+                        ? (
+                            <div className='flex flex-col justify-center gap-2'>
+                                <Link href='/settings' className='button mt-2 text-black bg-blue-50 border border-neutral-300'>Edit Profile</Link>
+                                <Logout deleteSession={deleteSession} />
+                            </div>
+                        )
+                        : (
+                            <Link href={`/message/${params.username}`} className='button'>Message</Link>
+                        )
+                    }
+                </div>
                 <div className='flex-1 p-2 flex flex-col self-stretch'>
                     <h1 className='text-xl font-medium text-neutral-700'>{params.username}</h1>
                     <p>{user.roles.join(' • ')}</p>

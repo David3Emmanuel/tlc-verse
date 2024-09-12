@@ -2,8 +2,8 @@ import Link from 'next/link'
 
 export default function GetStarted() {
     return (
-        <div className='h-full'>
-            <Link href='/signup' className='flex items-center p-2 w-full h-full justify-center font-medium rounded bg-[#ff0000] hover:bg-[#ee0000] text-white'>
+        <div className='h-full flex items-center'>
+            <Link href='/signup' className='button w-full px-2'>
                 Get Started
             </Link>
         </div >

@@ -22,8 +22,8 @@ export interface SessionUser {
 }
 
 export enum UserRole {
-    STUDENT = 'student',
     TUTOR = 'tutor',
+    STUDENT = 'student',
     PARENT = 'parent',
 }
 
