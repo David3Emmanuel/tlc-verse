@@ -2,6 +2,8 @@ import { getCurrentUser } from '@/actions/user'
 import type { Metadata } from 'next'
 import { redirect } from 'next/navigation'
 import { Play } from 'next/font/google'
+import { ContextProvider } from '@/app/game/utils/context'
+import Header from './Header'
 
 export const metadata: Metadata = {
     title: {
@@ -24,10 +26,13 @@ export default async function GameLayout({ children }: {
     if (error) redirect('/login?redirect=/game')
 
     return (
-        <div className={`${playFont.className} w-full h-screen flex flex-col overflow-x-hidden bg-neutral-700 p-5 text-white bg-texture`}>
-            <main className='flex-1'>
-                {children}
-            </main>
-        </div>
+        <ContextProvider>
+            <div className={`${playFont.className} w-full h-screen flex flex-col overflow-x-hidden bg-neutral-700 p-5 text-white bg-texture`}>
+                <Header />
+                <main className='flex-1 pt-12'>
+                    {children}
+                </main>
+            </div>
+        </ContextProvider>
     )
 }  

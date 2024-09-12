@@ -38,7 +38,7 @@ export default function Menu({ cta }: {
                 <ul className='flex flex-col gap-2'>
                     <NavLink href='/connect?role=tutor'>Find a Tutor</NavLink>
                     <NavLink href='/connect'>Connect</NavLink>
-                    <NavLink href='/multiplayer'>Multiplayer</NavLink>
+                    <NavLink href='/game'>Multiplayer</NavLink>
                     <NavLink href='/about'>About</NavLink>
                 </ul>
             </div>
