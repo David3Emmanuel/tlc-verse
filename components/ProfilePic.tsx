@@ -2,15 +2,17 @@ import Icon from '@/components/Icon'
 import { User } from '@/lib/definitions'
 import Image from 'next/image'
 
-export default function ProfilePic({ user }: {
-    user: User,
+export default function ProfilePic({ user, src }: {
+    user?: User,
+    src?: string,
 }) {
-    if (!user.profile_pic) return <ProfilePicDefault />
+    const _src = user?.profile_pic || src
+    if (!_src) return <ProfilePicDefault />
     return (
         <div className='m-auto flex w-24 h-24 sm:w-48 sm:h-48 border relative border-neutral-300/50 shadow rounded-full overflow-hidden'>
             <Image
-                src={user.profile_pic}
-                alt={`${user.username}'s profile picture`}
+                src={_src}
+                alt={`${user?.username}'s profile picture`}
                 fill priority sizes='12rem'
             />
         </div>

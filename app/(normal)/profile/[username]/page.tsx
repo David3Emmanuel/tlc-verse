@@ -1,7 +1,8 @@
-import { getUserByUsername, getUsers } from '@/actions/user'
+import { getCurrentUser, getUserByUsername, getUsers } from '@/actions/user'
 import ProfilePic, { ProfilePicPlaceholder } from '@/components/ProfilePic'
 import Tabs from '@/components/Tabs'
-import { Suspense } from 'react'
+import Link from 'next/link'
+import { Suspense, use } from 'react'
 
 export async function generateStaticParams(): Promise<{ username: string }[]> {
     const { data: users, error } = await getUsers()
@@ -50,12 +51,17 @@ export default async function Page({ params }: {
     // TODO add followers and following (friends = mutual)
     // TODO add contact info
 
+    const {data: currentUser, error} = await getCurrentUser()
+
     return (
         <div className='p-2 flex flex-col gap-5 sm:flex-row h-full justify-between bg-white sm:bg-transparent'>
             <div className='px-2 sm:px-0 flex sm:flex-col items-center gap-5 sm:gap-0 sm:bg-white sm:card sm:w-56 no-hover'>
                 <Suspense fallback={<ProfilePicPlaceholder />}>
                     <ProfilePic user={user} />
                 </Suspense>
+                {currentUser && currentUser.user_id === user.user_id && (
+                    <Link href='/settings' className='px-5 py-2 mt-2 font-medium bg-blue-50 border rounded border-neutral-300'>Edit Profile</Link>
+                )}
                 <div className='flex-1 p-2 flex flex-col self-stretch'>
                     <h1 className='text-xl font-medium text-neutral-700'>{params.username}</h1>
                     <p>{user.roles.join(' • ')}</p>

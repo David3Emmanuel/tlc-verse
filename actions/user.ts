@@ -2,8 +2,9 @@
 
 import { User, UserRole, SessionUser } from '@/lib/definitions'
 import supabase from '@/actions/supabase'
-import { getSession } from '@/actions/session'
+import { createSession, getSession, updateSession } from '@/actions/session'
 import { cache } from 'react'
+import { redirect } from 'next/navigation'
 
 export const getUsers = cache(
     async function (): Promise<{ data?: User[], error?: string }> {
@@ -91,3 +92,39 @@ export const getCurrentUser = cache(
         }
     }
 )
+
+export async function updateProfile(formData: FormData): Promise<{ error?: string }> {
+    const image = formData.get('image') as File
+    const bio = formData.get('bio') as string
+    const roles = Object.values(UserRole).filter(role => formData.has(role))
+
+    const update = { bio, roles } as { bio: string, roles: UserRole[], profile_pic: string }
+
+    const { data: currentSessionUser, error: sessionError } = await getCurrentUser()
+    if (sessionError) return { error: sessionError }
+
+    const db = await supabase()
+
+    if (image.size) {
+        const { error: uploadError } = await db.storage.from('profile_pics')
+            .upload(currentSessionUser!.user_id, image, { upsert: true })
+        if (uploadError) {
+            console.error(uploadError)
+            return { error: uploadError.message }
+        }
+
+        const { data } = db.storage.from('profile_pics')
+            .getPublicUrl(currentSessionUser!.user_id)
+        update.profile_pic = data.publicUrl
+    }
+
+    const { error: updateError } = await db.from('profiles')
+        .update(update)
+        .eq('user_id', currentSessionUser?.user_id)
+    if (updateError) {
+        console.error(updateError)
+        return { error: updateError.message }
+    }
+
+    redirect(`/profile/${currentSessionUser?.username}`)
+}
