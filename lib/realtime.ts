@@ -13,7 +13,7 @@ if (!supabaseKey) throw new Error('Missing NEXT_PUBLIC_SUPABASE_KEY')
 
 const supabase = createClient(supabaseUrl, supabaseKey)
 
-export function useBroadcast<Payload extends { [key: string]: any }>(channelName: string) {
+export function useBroadcast<Payload extends object>(channelName: string) {
     const [payload, setPayload] = useState<Payload | null>(null)
     const channel = useRef<RealtimeChannel | null>(null)
 
@@ -49,7 +49,7 @@ export function useBroadcast<Payload extends { [key: string]: any }>(channelName
                 channel.current = null
             }
         }
-    }, [])
+    }, [channelName])
 
     return [payload, sendBroadcast] as [Payload, (payload: Payload) => void]
 }
@@ -67,7 +67,7 @@ export function useWatchDB<T extends { id: ID }, ID>(tableName: string) {
                 setData(data)
             }
         })()
-    }, [])
+    }, [payload, tableName])
 
     useEffect(() => {
         if (!channel.current) {
@@ -75,7 +75,7 @@ export function useWatchDB<T extends { id: ID }, ID>(tableName: string) {
             channel.current.on(
                 'postgres_changes',
                 { event: '*', schema: 'public', table: tableName },
-                (rawPayload: RealtimePostgresChangesPayload<{ id?: ID, [key: string]: any; }>) => {
+                (rawPayload: RealtimePostgresChangesPayload<{ id?: ID }>) => {
                     const payload = rawPayload as WatchDBPayload<T, ID>
                     setPayload(payload)
                     switch (payload.eventType) {
@@ -100,7 +100,7 @@ export function useWatchDB<T extends { id: ID }, ID>(tableName: string) {
                 channel.current = null
             }
         }
-    }, [])
+    }, [tableName])
 
     return [data, payload] as [(T[] | null), (WatchDBPayload<T, ID> | null)]
 }

@@ -20,7 +20,7 @@ export default function Filters({ filters: initialFilters, submit }: {
 
     useEffect(() => {
         submit(filters)
-    }, [filters])
+    }, [submit, filters])
 
     return (
         <div className='flex items-center justify-between'>

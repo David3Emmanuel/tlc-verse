@@ -80,7 +80,7 @@ export interface FiltersData {
 
 interface InsertPayload<T extends { id: ID }, ID> {
     eventType: 'INSERT'
-    old: {}
+    old: Record<string, never>
     new: T
 }
 
@@ -90,16 +90,16 @@ interface UpdatePayload<T extends { id: ID }, ID> {
     new: T
 }
 
-interface DeletePayload<T extends { id: ID }, ID> {
+interface DeletePayload<ID> {
     eventType: 'DELETE'
     old: { id: ID }
-    new: {}
+    new: Record<string, never>
 }
 
 export type WatchDBPayload<T extends { id: ID }, ID> =
     InsertPayload<T, ID> |
     UpdatePayload<T, ID> |
-    DeletePayload<T, ID>
+    DeletePayload<ID>
 
 export interface Game {
     id: string

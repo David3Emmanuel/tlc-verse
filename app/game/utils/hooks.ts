@@ -16,7 +16,7 @@ export function useLobby(joinLobby: () => Promise<{ error?: string }>) {
             .then(({ error }) => {
                 if (error) console.error(error)
             })
-    }, [currentUser])
+    }, [currentUser, joinLobby])
 
     useEffect(() => {
         (async () => {
@@ -24,7 +24,7 @@ export function useLobby(joinLobby: () => Promise<{ error?: string }>) {
             const availableGame = games.find(game => !game.completed && [game.player1, game.player2].includes(currentUser!.user_id))
             if (availableGame) setGame(availableGame)
         })()
-    }, [games, payload])
+    }, [games, payload, currentUser])
 
     return game
 }
@@ -34,8 +34,8 @@ export function useGame(
     serverQuestions: Question[],
     getQuestion: (questionId: number) => Promise<{ data?: Question, error?: string }>,
 ) {
-    const [_, gamePayload] = useWatchDB<Game, string>('games')
-    const [__, questionsPayload] = useWatchDB<{ id: number, game_id: string, question_id: number, created_at: Date }, number>('games_questions')
+    const gamePayload = useWatchDB<Game, string>('games')[1]
+    const questionsPayload = useWatchDB<{ id: number, game_id: string, question_id: number, created_at: Date }, number>('games_questions')[1]
 
     const [player1Score, setPlayer1Score] = useState(game.player1_score)
     const [player2Score, setPlayer2Score] = useState(game.player2_score)
@@ -46,7 +46,7 @@ export function useGame(
             setPlayer1Score(gamePayload.new.player1_score)
             setPlayer2Score(gamePayload.new.player2_score)
         }
-    }, [gamePayload])
+    }, [gamePayload, game.id])
 
     useEffect(() => {
         if (questionsPayload?.eventType === 'INSERT') {
@@ -58,7 +58,7 @@ export function useGame(
                     setQuestions(prev => [...prev, newQuestion!])
                 })
         }
-    }, [__, questionsPayload])
+    }, [questionsPayload, getQuestion])
 
     return {
         scores: [player1Score, player2Score] as [number, number],

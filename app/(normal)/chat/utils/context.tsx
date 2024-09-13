@@ -1,8 +1,7 @@
 'use client'
 
-import { getCurrentUser } from '@/actions/user'
 import { Message, SessionUser } from '@/lib/definitions'
-import { createContext, useEffect, useState } from 'react'
+import { createContext } from 'react'
 import { useChat } from './hooks'
 
 

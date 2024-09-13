@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { usePathname, useSearchParams } from 'next/navigation'
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 
 export default function Tabs({ tabs }: {
     tabs: {
@@ -18,7 +18,7 @@ export default function Tabs({ tabs }: {
     const pathname = usePathname()
     const searchParams = useSearchParams()
 
-    const setCurrentTab = (tab: string | null) => {
+    const setCurrentTab = useCallback((tab: string | null) => {
         const newSearchParams = new URLSearchParams(searchParams.toString())
         if (tab && tabNames.includes(tab)) {
             newSearchParams.set('tab', tab)
@@ -28,12 +28,12 @@ export default function Tabs({ tabs }: {
             _setCurrentTab(tabNames[0])
         }
         window.history.replaceState(null, '', `?${newSearchParams.toString()}`)
-    }
+    }, [searchParams, tabNames])
 
     useEffect(() => {
         const tab = searchParams.get('tab')
         setCurrentTab(tab)
-    }, [searchParams])
+    }, [searchParams, setCurrentTab])
 
     return (<div className='flex-1 flex flex-col gap-2 sm:bg-white sm:card px-5 sm:px-6 no-hover'>
         <div className='flex gap-5 border border-neutral-50 rounded-full px-5 py-2'>

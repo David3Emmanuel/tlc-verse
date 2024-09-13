@@ -5,7 +5,7 @@ import GameView from '@/app/game/[id]/GameView'
 export default async function Page({ params }: {
     params: { id: string },
 }) {
-    const { data: currentUser, error: currentUserError } = await getCurrentUser()
+    const { error: currentUserError } = await getCurrentUser()
     if (currentUserError) throw new Error(currentUserError)
 
     const { data, error } = await getGame(params.id)

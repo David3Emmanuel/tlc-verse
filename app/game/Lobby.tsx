@@ -11,7 +11,7 @@ export default function Lobby({ joinLobby }: {
     const availableGame = useLobby(joinLobby)
     useEffect(() => {
         if (availableGame) router.push(`/game/${availableGame.id}`)
-    }, [availableGame])
+    }, [availableGame, router])
 
     return (
         <div>Waiting for a match...</div>

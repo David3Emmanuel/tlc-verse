@@ -22,7 +22,7 @@ const playFont = Play({
 export default async function GameLayout({ children }: {
     children: React.ReactNode
 }) {
-    const { data: user, error } = await getCurrentUser()
+    const { error } = await getCurrentUser()
     if (error) redirect('/login?redirect=/game')
 
     return (

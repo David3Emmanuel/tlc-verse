@@ -21,7 +21,7 @@ export default function ChatsView({ getUser }: {
             }
             setChatIds(_chatIds.filter(id => id !== sessionUser?.user_id))
         }
-    }, [messages])
+    }, [messages, sessionUser])
 
     useEffect(() => {
         for (const userId of chatIds) {
@@ -34,7 +34,7 @@ export default function ChatsView({ getUser }: {
                     setChats(prev => ({ ...prev, ...update }))
                 })
         }
-    }, [chatIds])
+    }, [chats, chatIds, getUser])
 
     return <ul className=''>
         {chatIds?.map((id, i) => (

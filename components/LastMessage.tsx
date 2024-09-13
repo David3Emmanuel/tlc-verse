@@ -12,7 +12,7 @@ export default function LastMessage({ user }: { user: User }) {
         if (!messages) return
         const _lastMessage = messages?.toReversed().find(message => [message.sent_by, message.sent_to].includes(user.user_id))
         setLastMessage(_lastMessage)
-    }, [messages])
+    }, [messages, user])
 
     if (!lastMessage) return
 

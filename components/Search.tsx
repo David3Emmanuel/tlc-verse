@@ -14,7 +14,6 @@ export default function Search({inMenu}: {
 }) {
     const [users, setUsers] = useState<User[] | null>(null)
     const [query, setQuery] = useState('')
-    const [inFocus, setInFocus] = useState(false)
     const router = useRouter()
 
     const handleInput = (e: ChangeEvent<HTMLInputElement>) => {

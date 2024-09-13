@@ -1,6 +1,5 @@
 import { User, UserRole } from '@/lib/definitions'
 import { getUsers, getUsersByRoles, getUsersByUsername, getUsersByUsernameAndRoles } from '@/actions/user'
-import Link from 'next/link'
 import UserDisplay from '@/components/UserDisplay'
 
 export default async function UsersDisplay({ roles, query }: {
@@ -11,19 +10,19 @@ export default async function UsersDisplay({ roles, query }: {
 
     try {
         if (roles.length > 0 && query) {
-            let { data, error } = await getUsersByUsernameAndRoles(query, roles)
+            const { data, error } = await getUsersByUsernameAndRoles(query, roles)
             if (error) throw new Error(error)
             results = data!
         } else if (roles.length > 0) {
-            let { data, error } = await getUsersByRoles(roles)
+            const { data, error } = await getUsersByRoles(roles)
             if (error) throw new Error(error)
             results = data!
         } else if (query) {
-            let { data, error } = await getUsersByUsername(query)
+            const { data, error } = await getUsersByUsername(query)
             if (error) throw new Error(error)
             results = data!
         } else {
-            let { data, error } = await getUsers()
+            const { data, error } = await getUsers()
             if (error) throw new Error(error)
             results = data!
         }
