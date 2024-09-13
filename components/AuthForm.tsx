@@ -9,7 +9,7 @@ export default function AuthForm({ name, action, error, success, children, switc
     children: React.ReactNode,
     switchLabel: string,
     switchLink: React.ReactNode,
-    redirectUrl: string | null,
+    redirectUrl: string | null | undefined,
 }) {
     if (success) redirect(redirectUrl || '/')
 

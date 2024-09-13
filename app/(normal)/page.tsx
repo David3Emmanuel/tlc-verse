@@ -18,7 +18,7 @@ export default function Page() {
         <FeatureCard feature='Find a Tutor' link='/connect?role=tutor'>
           <p>Search for top tutors in various subjects and book personalised lessons</p>
         </FeatureCard>
-        <FeatureCard feature='Multiplayer Game' link='/multiplayer'>
+        <FeatureCard feature='Multiplayer Game' link='/game'>
           <p>Challenge your friends in a fun, competitive quiz game and top the leaderboard</p>
         </FeatureCard>
         <FeatureCard feature='Connect' link='/connect'>
