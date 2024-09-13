@@ -1,6 +1,7 @@
-import { redirect, useSearchParams } from 'next/navigation'
+'use client'
+import { redirect } from 'next/navigation'
 
-export default function AuthForm({ name, action, error, success, children, switchLabel, switchLink }: {
+export default function AuthForm({ name, action, error, success, children, switchLabel, switchLink, redirectUrl }: {
     name: string,
     action?: (formData: FormData) => void,
     error?: string,
@@ -8,9 +9,9 @@ export default function AuthForm({ name, action, error, success, children, switc
     children: React.ReactNode,
     switchLabel: string,
     switchLink: React.ReactNode,
+    redirectUrl: string | null,
 }) {
-    const searchParams = useSearchParams()
-    if (success) redirect(searchParams.get('redirect') || '/')
+    if (success) redirect(redirectUrl || '/')
 
     return (
         <form action={action} className='form'>

@@ -7,7 +7,9 @@ import { signup } from '@/actions/auth'
 import { useFormState } from 'react-dom'
 import { UserRole } from '@/lib/definitions'
 
-export default function Page() {
+export default function Page({searchParams}: {
+    searchParams: URLSearchParams
+}) {
     const [state, action] = useFormState(signup, undefined)
 
     return (
@@ -17,6 +19,7 @@ export default function Page() {
             success={state?.message}
             switchLabel='Already have an account?'
             switchLink={<Link href='/login'>Login</Link>}
+            redirectUrl={searchParams.get('redirect')}
         >
             <FormInput label='Email' placeholder='name@example.com' type='email' name='email' required state={state} />
             <FormInput label='Password' placeholder='*****' type='password' name='password' required state={state} />
