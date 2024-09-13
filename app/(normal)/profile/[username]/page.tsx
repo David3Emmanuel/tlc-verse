@@ -60,7 +60,7 @@ export default async function Page({ params }: {
 
     return (
         <div className='p-2 flex flex-col gap-5 sm:flex-row h-full justify-between bg-white sm:bg-transparent'>
-            <div className='px-2 sm:px-0 flex sm:flex-col items-center gap-5 sm:gap-0 sm:bg-white sm:card sm:w-56 no-hover'>
+            <div className='px-2 sm:px-0 flex flex-col items-center gap-5 sm:gap-0 sm:bg-white sm:card sm:w-56 no-hover'>
                 <div className='flex flex-col gap-2'>
                     <Suspense fallback={<ProfilePicPlaceholder />}>
                         <ProfilePic user={user} />
@@ -70,6 +70,7 @@ export default async function Page({ params }: {
                             <div className='flex flex-col justify-center gap-2'>
                                 <Link href='/settings' className='button mt-2 text-black bg-blue-50 hover:bg-blue-100 border border-neutral-300'>Edit Profile</Link>
                                 <Logout deleteSession={deleteSession} />
+                                <Link href='/chat' className='underline text-center text-blue-500 text-sm'>Your chats</Link>
                             </div>
                         )
                         : (
@@ -78,9 +79,9 @@ export default async function Page({ params }: {
                     }
                 </div>
                 <div className='flex-1 p-2 flex flex-col self-stretch'>
-                    <h1 className='text-xl font-medium text-neutral-700'>{params.username}</h1>
-                    <p>{user.roles.join(' • ')}</p>
-                    <p className='text-neutral-700'>{user.first_name} {user.last_name}</p>
+                    <h1 className='text-xl text-center font-medium text-neutral-700'>{params.username}</h1>
+                    <p className='text-center'>{user.roles.join(' • ')}</p>
+                    <p className='text-neutral-700 text-center'>{user.first_name} {user.last_name}</p>
                     {user.bio && <p className='my-2'>{user.bio}</p>}
                 </div>
             </div>

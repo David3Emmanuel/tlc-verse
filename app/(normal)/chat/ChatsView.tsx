@@ -5,8 +5,9 @@ import { Context } from '@/app/(normal)/chat/utils/context'
 import { User } from '@/lib/definitions'
 import ChatPreview from '@/components/ChatPreview'
 
-export default function ChatsView({ getUser }: {
-    getUser: (id: string) => Promise<{ data?: User, error?: string }>
+export default function ChatsView({ getUser, split }: {
+    getUser: (id: string) => Promise<{ data?: User, error?: string }>,
+    split?: boolean,
 }) {
     const { sessionUser, messages } = useContext(Context)
     const [chatIds, setChatIds] = useState<string[]>([])
@@ -36,10 +37,10 @@ export default function ChatsView({ getUser }: {
         }
     }, [chats, chatIds, getUser])
 
-    return <ul className=''>
+    return <ul className='py-3'>
         {chatIds?.map((id, i) => (
-            <li key={i}>
-                <ChatPreview user={chats[id]} />
+            <li key={i} className='flex justify-center py-2'>
+                <ChatPreview user={chats[id]} split={split} />
             </li>
         ))}
     </ul>

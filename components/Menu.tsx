@@ -8,9 +8,13 @@ import NavLink from '@/components/NavLink'
 
 import styles from '@/components/Menu.module.css'
 import { usePathname, useSearchParams } from 'next/navigation'
+import Logout from '@/app/(normal)/profile/[username]/Logout'
+import { SessionUser } from '@/lib/definitions'
 
-export default function Menu({ cta }: {
+export default function Menu({ cta, deleteSession, currentUser }: {
     cta: React.ReactNode,
+    deleteSession: () => void,
+    currentUser?: SessionUser,
 }) {
     const [open, setOpen] = useState(false)
     const pathname = usePathname()
@@ -24,23 +28,29 @@ export default function Menu({ cta }: {
 
     return (<>
         <Icon icon='menu' onClick={() => setOpen(true)} />
-        <div onClick={handleClickOut} className={`${styles.menu} fixed top-0 backdrop-blur w-screen h-screen right-0 flex items-stretch justify-end transition-transform origin-right ${open ? 'scale-x-100' : 'scale-x-0'}`}>
-            <div className={`z-10 max-w-screen w-96 bg-black p-4`}>
-                <div className='flex items-center h-12 pb-5'>
+        <div onClick={handleClickOut} className={`${styles.menu} z-10 backdrop-blur fixed top-0 w-screen h-screen right-0 flex items-stretch justify-end transition-transform origin-right ${open ? 'scale-x-100' : 'scale-x-0'}`}>
+            <div className={`w-96 min-[300px]:max-w-[75vw] max-[300px]:w-[90vw] bg-black bg-texture flex flex-col`}>
+                <div className='flex items-center h-12 p-8'>
                     <Icon icon='close' color='text-white' onClick={() => setOpen(false)} />
                     <Link href='/' className='flex-1 text-3xl font-medium p-2 flex items-center justify-center text-white'>TLCverse</Link>
                 </div>
-                <Search inMenu />
-                <div className='text-white py-2 flex'>
+                <div className='px-2'>
+                    <Search inMenu />
+                </div>
+                <div className='text-white p-4 py-6 flex justify-center'>
                     {cta}
                 </div>
                 <h2 className='text-white text-center font-medium text-xl mt-5 mb-2'>Navigation Links</h2>
-                <ul className='flex flex-col gap-2'>
-                    <NavLink href='/connect?role=tutor'>Find a Tutor</NavLink>
-                    <NavLink href='/connect'>Connect</NavLink>
-                    <NavLink href='/game'>Multiplayer</NavLink>
-                    <NavLink href='/about'>About</NavLink>
-                </ul>
+                <div className='bg-neutral-700 bg-texture p-2 flex-1'>
+                    <ul className='flex flex-col gap-2 pl-5'>
+                        <NavLink href='/chat'>Your Chats</NavLink>
+                        <NavLink href='/connect?role=tutor'>Find a Tutor</NavLink>
+                        <NavLink href='/connect'>Connect</NavLink>
+                        <NavLink href='/game'>Multiplayer</NavLink>
+                        <NavLink href='/about'>About</NavLink>
+                        {currentUser && <Logout deleteSession={deleteSession} />}
+                    </ul>
+                </div>
             </div>
         </div>
     </>)

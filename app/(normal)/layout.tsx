@@ -23,7 +23,7 @@ export default function NormalLayout({ children }: {
   return (
     <div className={`${poppins.className} w-full h-screen flex flex-col overflow-x-hidden bg-violet-100 bg-texture`}>
       <Header />
-      <main className='flex-1'>
+      <main className='flex-1 flex flex-col'>
         {children}
       </main>
     </div>

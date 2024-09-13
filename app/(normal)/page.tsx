@@ -1,15 +1,19 @@
+import { getCurrentUser } from '@/actions/user'
 import FeatureCard from '@/components/FeatureCard'
 import GetStarted from '@/components/GetStarted'
+import Logout from './profile/[username]/Logout'
+import { deleteSession } from '@/actions/session'
 
-export default function Page() {
+export default async function Page() {
+  const { data: user } = await getCurrentUser()
+
   // TODO add section to browse subjects
-
   return (<>
-    <div className='text-center h-[75vh] flex flex-col justify-center items-center gap-5 p-2'>
-      <h1 className='text-4xl font-medium italic'>Teach, Learn, Connect</h1>
-      <p className='italic'>Unlock potential with with personalised tutoring and structured learning</p>
+    <div className='text-center h-[50vh] sm:h-[75vh] flex flex-col justify-center items-center sm:gap-5 p-2'>
+      <h1 className='text-2xl sm:text-4xl font-medium italic'>Teach, Learn, Connect</h1>
+      <p className='italic'>Unlock potential with personalised tutoring and structured learning</p>
       <div className='my-5 w-48'>
-        <GetStarted />
+        {user ? <Logout deleteSession={deleteSession} /> : <GetStarted />}
       </div>
     </div>
     <div className='bg-black bg-texture text-white w-full p-5'>

@@ -3,6 +3,10 @@
     color: white;
 }
 
+.menu li a {
+    justify-content: right;
+}
+
 .menu li a:hover {
     background-color: inherit;
     color: inherit;

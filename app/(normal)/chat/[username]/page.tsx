@@ -9,8 +9,8 @@ export default async function Page({ params }: {
     if (error) return <div>{error}</div>
 
     return (
-        <div className='flex gap-2 px-2 h-[95vh] sm:h-[80vh]'>
-            <div className='flex-1 hidden sm:block'><ChatsView getUser={getUserById} /></div>
+        <div className='flex gap-2 px-2 flex-1'>
+            <div className='hidden sm:block'><ChatsView getUser={getUserById} split /></div>
             <MessagesView user={user!} />
         </div>
     )

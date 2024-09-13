@@ -17,6 +17,6 @@ export default function LastMessage({ user }: { user: User }) {
     if (!lastMessage) return
 
     return (
-        <p className='text-neutral-700'>{lastMessage.sent_by !== user.user_id && <span className='text-black'>You: </span>}{lastMessage.message}</p>
+        <p className='text-neutral-700 text-sm truncate'>{lastMessage.sent_by !== user.user_id && <span className='text-black'>You: </span>}{lastMessage.message}</p>
     )
 }

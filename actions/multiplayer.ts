@@ -70,7 +70,6 @@ export async function getQuestions(gameId: string): Promise<{ data?: Question[],
         .select('*')
         .eq('game_id', gameId)
         .order('added_at', { ascending: true })
-    // FIXME sort by added_at is not working
     if (getQuestionIdsError) return { error: getQuestionIdsError.message }
 
     const { data: questions, error: getQuestionsError } = await db.from('questions')

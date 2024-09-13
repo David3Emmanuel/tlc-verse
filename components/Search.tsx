@@ -9,7 +9,7 @@ import { ChangeEvent, useEffect, useState } from 'react'
 
 import styles from '@/components/Search.module.css'
 
-export default function Search({inMenu}: {
+export default function Search({ inMenu }: {
     inMenu?: boolean,
 }) {
     const [users, setUsers] = useState<User[] | null>(null)
@@ -39,14 +39,14 @@ export default function Search({inMenu}: {
     }, [query])
 
     return (
-        <div className={`relative flex-1 h-fit max-w-96 ${styles.search}`}>
-            <div className={`flex items-stretch h-12`}>
+        <div className={`relative flex-1 h-fit ${styles.search} ${inMenu ? 'max-w-full' : 'max-w-96'}`}>
+            <div className={`flex items-stretch ${inMenu ? 'h-10' : 'h-12'}`}>
                 <input
                     placeholder='Find someone you know'
-                    className="flex-1 p-2 outline-none rounded-l border border-neutral-200 focus:border-neutral-400"
+                    className={`${inMenu?'text-sm':''} flex-1 p-2 outline-none rounded-l border border-neutral-200 focus:border-neutral-400`}
                     value={query} onChange={handleInput}
                 />
-                <button onClick={handleSubmit} className='bg-neutral-600 p-2 text-white rounded-r'><Icon icon='search' /></button>
+                <button onClick={handleSubmit} className='bg-neutral-600 text-white rounded-r'><Icon icon='search' /></button>
             </div>
             {users && (
                 <div className={`${styles.users} absolute top-full ${inMenu ? 'bg-white' : 'bg-white/95'} backdrop-blur left-0 right-0 flex flex-col rounded-b border border-neutral-200`}>

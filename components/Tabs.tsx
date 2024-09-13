@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { usePathname, useSearchParams } from 'next/navigation'
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useState } from 'react'
 
 export default function Tabs({ tabs }: {
     tabs: {
@@ -29,11 +29,6 @@ export default function Tabs({ tabs }: {
         }
         window.history.replaceState(null, '', `?${newSearchParams.toString()}`)
     }, [searchParams, tabNames])
-
-    useEffect(() => {
-        const tab = searchParams.get('tab')
-        setCurrentTab(tab)
-    }, [searchParams, setCurrentTab])
 
     return (<div className='flex-1 flex flex-col gap-2 sm:bg-white sm:card px-5 sm:px-6 no-hover'>
         <div className='flex gap-5 border border-neutral-50 rounded-full px-5 py-2'>
