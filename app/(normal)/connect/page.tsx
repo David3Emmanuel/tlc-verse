@@ -4,6 +4,7 @@ import UsersDisplay from '@/app/(normal)/connect/UsersDisplay'
 import Filters from '@/app/(normal)/connect/Filters'
 import { UserRole } from '@/lib/definitions'
 import { redirect } from 'next/navigation'
+import Link from 'next/link'
 
 export const metadata: Metadata = {
     title: 'Connect',
@@ -26,7 +27,7 @@ export default async function Page({ searchParams }: {
     // FIXME show loading on filter
 
     return (<div className='p-2 bg-white sm:bg-inherit h-full'>
-        <h1 className='text-2xl font-medium mt-5 mb-2 sm:text-center'>Connect</h1>
+        <h1 className='text-2xl font-medium mt-5 mb-2 sm:text-center'>Connect <Link href='/chat' className='font-normal ml-5 text-lg text-blue-500 underline'>Go to your chats</Link></h1>
         <div className='flex flex-col gap-2 w-full h-full sm:w-[40rem] sm:h-auto sm:my-5 mx-auto max-w-full px-2 py-5 bg-white sm:shadow sm:rounded-lg'>
             <Suspense fallback={null}>
                 <Filters

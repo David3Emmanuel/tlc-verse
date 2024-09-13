@@ -2,7 +2,6 @@ import { getCurrentUser, getUserById, updateProfile } from '@/actions/user'
 import ProfilePic, { ProfilePicPlaceholder } from '@/components/ProfilePic'
 import { redirect } from 'next/navigation'
 
-import styles from '@/app/(normal)/settings/settings.module.css'
 import { Suspense } from 'react'
 import FileUpload from '@/components/FileUpload'
 import { UserRole } from '@/lib/definitions'

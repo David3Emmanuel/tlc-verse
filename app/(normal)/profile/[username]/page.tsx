@@ -68,12 +68,12 @@ export default async function Page({ params }: {
                     {currentUser && currentUser.user_id === user.user_id
                         ? (
                             <div className='flex flex-col justify-center gap-2'>
-                                <Link href='/settings' className='button mt-2 text-black bg-blue-50 border border-neutral-300'>Edit Profile</Link>
+                                <Link href='/settings' className='button mt-2 text-black bg-blue-50 hover:bg-blue-100 border border-neutral-300'>Edit Profile</Link>
                                 <Logout deleteSession={deleteSession} />
                             </div>
                         )
                         : (
-                            <Link href={`/message/${params.username}`} className='button'>Message</Link>
+                            <Link href={`/chat/${params.username}`} className='button'>Message</Link>
                         )
                     }
                 </div>

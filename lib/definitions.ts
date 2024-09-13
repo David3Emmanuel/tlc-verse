@@ -117,3 +117,16 @@ export interface Question {
     options: string[]
     correct_option_index: number
 }
+
+export interface Message {
+    id: string
+    message: string
+    sent_by: string
+    sent_to: string
+    sent_at: string
+}
+
+export interface MessageFormState {
+    serverError?: string
+    message?: string
+}
